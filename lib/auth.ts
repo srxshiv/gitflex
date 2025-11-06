@@ -1,4 +1,7 @@
 import GitHubProvider from "next-auth/providers/github";
+import type { JWT } from "next-auth/jwt";
+import type { Account , Session } from "next-auth";
+
 
 export const authOptions= {
     providers : [
@@ -13,14 +16,14 @@ export const authOptions= {
         } ) 
     ] ,
     callbacks : {
-        async jwt({account , token }){
+        async jwt({account , token } : {account : Account | null , token : JWT}){
             if(account) {
                 token.accessToken = account.access_token
             }
             return token
         } ,
-        async session({token , session}) {
-            session.accessToken = token.accessToken;
+        async session({token , session} : {token : JWT , session : Session}) {
+            session.accessToken = token.accessToken as string
             return session;
         }
     } ,
