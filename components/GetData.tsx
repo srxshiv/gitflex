@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
+
 export default function GetData() {
   const session = useSession();
   async function getGithubData() {
