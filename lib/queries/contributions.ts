@@ -14,20 +14,39 @@ query {
         }
       }
 
-      # Repos the user contributed to (NOT OWNED)
       commitContributionsByRepository(maxRepositories: 100) {
         repository {
           name
           owner { login }
           stargazerCount
-          collaborators(first: 10) {
-            totalCount
+        }
+        contributions(first: 100) {
+          nodes {
+            occurredAt
+            commitCount
           }
         }
       }
 
-      pullRequestContributions {
-        totalCount
+      pullRequestContributionsByRepository(maxRepositories: 50) {
+        repository {
+          name
+          owner { login }
+        }
+        contributions(first: 100) {
+          nodes {
+            pullRequest {
+              title
+              url
+              state
+              merged
+              mergedAt
+              createdAt
+              additions
+              deletions
+            }
+          }
+        }
       }
 
       issueContributions {
